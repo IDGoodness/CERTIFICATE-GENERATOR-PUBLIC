@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "sonner";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "./ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle,} from "./ui/card";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import {
@@ -126,6 +120,8 @@ import {
   buildFullCertificateUrl,
   normalizeCertificateUrl,
 } from "../utils/certificateUtils";
+import logo from "../assets/logo.svg";
+import Footer from "../components/landing/Footer";
 
 // Organization is the new name for Subsidiary
 type Organization = Subsidiary;
@@ -134,8 +130,7 @@ type Organization = Subsidiary;
 // Use stable placeholder URLs for the logos. Replace with local public assets
 // (for example '/images/default-org-logo.png') if you add them to the public folder.
 const defaultOrgLogo = "https://via.placeholder.com/256x256.png?text=Org+Logo";
-const certifyerLogo =
-  "https://via.placeholder.com/300x80.png?text=Certifyer+Logo";
+const certifyerLogo = logo;
 
 interface AdminDashboardProps {
   user: UserProfile;
@@ -2807,6 +2802,12 @@ export default function AdminDashboard({
                 onBack={() => setActiveTab("overview")}
               />
             )}
+          </div>
+          <div className="flex-1 md:flex-none bg-black text-white p-6 mr-6 ">
+            <img src={certifyerLogo} alt="Certifyer Logo" />
+            <p className="text-sm md:text-base mt-2">
+              Empowering educators to create and manage certificates with ease.
+            </p>
           </div>
         </main>
 
