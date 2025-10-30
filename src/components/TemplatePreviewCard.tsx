@@ -1,15 +1,21 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
-import { Button } from './ui/button';
-import { Badge } from './ui/badge';
-import { Eye } from 'lucide-react';
-import CertificateRenderer from './CertificateRenderer';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
+import { Button } from "./ui/button";
+import { Badge } from "./ui/badge";
+import { Eye } from "lucide-react";
+import CertificateRenderer from "./CertificateRenderer";
 
 interface Template {
   id: string;
   name: string;
   description: string;
   config: any;
-  type: 'default' | 'custom';
+  type: "default" | "custom";
   createdBy?: string;
   createdAt: string;
   isDefault: boolean;
@@ -28,10 +34,10 @@ export default function TemplatePreviewCard({
   onSelect,
   onPreview,
   onDelete,
-  showDelete = false
+  showDelete = false,
 }: TemplatePreviewCardProps) {
   return (
-    <Card 
+    <Card
       className="group hover:shadow-xl transition-all duration-300 hover:border-orange-400 cursor-pointer overflow-hidden"
       onClick={() => onSelect(template)}
     >
@@ -52,7 +58,7 @@ export default function TemplatePreviewCard({
           )}
         </div>
       </CardHeader>
-      
+
       <CardContent className="space-y-3">
         {/* Preview - Actual Certificate Render */}
         <div className="relative aspect-[4/3] rounded-lg overflow-hidden border-2 border-gray-200 bg-gray-50 transition-transform group-hover:scale-[1.02]">
@@ -67,6 +73,8 @@ export default function TemplatePreviewCard({
                 recipientName="John Doe"
                 isPreview={true}
                 mode="template-selection"
+                // If this is a custom template, pass the saved config so logos/signatures render
+                customTemplateConfig={template.config}
               />
             </div>
           </div>
@@ -99,7 +107,7 @@ export default function TemplatePreviewCard({
             Use Template
           </Button>
         </div>
-        
+
         {showDelete && onDelete && (
           <Button
             size="sm"

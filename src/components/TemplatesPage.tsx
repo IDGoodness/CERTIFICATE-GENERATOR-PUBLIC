@@ -178,6 +178,7 @@ export default function TemplatesPage({
                     recipientName="John Doe"
                     isPreview={true}
                     mode="template-selection"
+                    customTemplateConfig={template.config}
                   />
                 </div>
               </TemplateErrorBoundary>
@@ -307,6 +308,7 @@ export default function TemplatesPage({
                     recipientName="John Doe"
                     isPreview={true}
                     mode="template-selection"
+                    customTemplateConfig={preview.config}
                   />
                 </div>
               </TemplateErrorBoundary>

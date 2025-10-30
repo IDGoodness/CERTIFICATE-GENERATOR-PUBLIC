@@ -2233,6 +2233,9 @@ export default function AdminDashboard({
                                         recipientName="Sample Student Name"
                                         isPreview={true}
                                         mode="template-selection"
+                                        customTemplateConfig={
+                                          genCustomTemplateConfig
+                                        }
                                       />
                                     </div>
                                   </div>

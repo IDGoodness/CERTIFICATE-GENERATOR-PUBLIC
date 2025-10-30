@@ -5,6 +5,7 @@ import CertificateTemplate4 from "./templates/CertificateTemplate4";
 import CertificateTemplate5 from "./templates/CertificateTemplate5";
 import CertificateTemplate6 from "./templates/CertificateTemplate6";
 import CertificateTemplate7 from "./templates/CertificateTemplate7";
+import CertificateTemplate from "./CertificateTemplate";
 
 interface CertificateRendererProps {
   templateId: string;
@@ -23,6 +24,7 @@ interface CertificateRendererProps {
   signatoryName2?: string;
   signatoryTitle2?: string;
   signatureUrl2?: string;
+  customTemplateConfig?: any;
 }
 
 export default function CertificateRenderer({
@@ -42,7 +44,23 @@ export default function CertificateRenderer({
   signatoryName2,
   signatoryTitle2,
   signatureUrl2,
+  customTemplateConfig,
 }: CertificateRendererProps) {
+  // If a custom template config is provided, render the generic renderer
+  if (customTemplateConfig) {
+    const program = { id: "preview", name: courseTitle, description };
+    return (
+      <CertificateTemplate
+        subsidiary={null}
+        program={program}
+        studentName={recipientName}
+        certificateId={"preview"}
+        completionDate={date}
+        preview={isPreview}
+        customTemplateConfig={customTemplateConfig}
+      />
+    );
+  }
   const templateProps = {
     header,
     courseTitle,
@@ -62,32 +80,32 @@ export default function CertificateRenderer({
   };
 
   // Normalize template ID - handle both "template1" and "1" formats
-  const normalizedId = templateId.replace(/^template/i, '');
+  const normalizedId = templateId.replace(/^template/i, "");
 
   // Global Template Library System
   // Templates are added sequentially as they are created
   switch (normalizedId) {
     case "1":
       return <CertificateTemplate1 {...templateProps} />;
-    
+
     case "2":
       return <CertificateTemplate2 {...templateProps} />;
-    
+
     case "3":
       return <CertificateTemplate3 {...templateProps} />;
-    
+
     case "4":
       return <CertificateTemplate4 {...templateProps} />;
-    
+
     case "5":
       return <CertificateTemplate5 {...templateProps} />;
-    
+
     case "6":
       return <CertificateTemplate6 {...templateProps} />;
-    
+
     case "7":
       return <CertificateTemplate7 {...templateProps} />;
-    
+
     // All other template IDs fall back to Template 1
     // This ensures the system never breaks even if an invalid ID is used
     default:
