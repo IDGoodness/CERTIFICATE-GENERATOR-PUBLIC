@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "sonner";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle,} from "./ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import {
@@ -22,6 +28,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "./ui/tooltip";
+import { isOrgPremium } from "../utils/subscriptionUtils";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "./ui/sheet";
 import {
   Dialog,
@@ -2433,7 +2440,7 @@ export default function AdminDashboard({
                 organization={currentOrganization}
                 showBuilderButton={true}
                 accessToken={accessToken}
-                isPremiumUser={true}
+                isPremiumUser={isOrgPremium(currentOrganization)}
               />
             )}
 
@@ -2714,7 +2721,7 @@ export default function AdminDashboard({
                   onSelectTemplate={handleTemplateSelection}
                   organization={currentOrganization}
                   accessToken={accessToken}
-                  isPremiumUser={true}
+                  isPremiumUser={isOrgPremium(currentOrganization)}
                 />
               </>
             )}
@@ -2795,10 +2802,7 @@ export default function AdminDashboard({
             {activeTab === "template-builder" && currentOrganization && (
               <TemplateBuilderPage
                 organization={currentOrganization}
-                isPremiumUser={
-                  currentOrganization?.tier === "premium" ||
-                  currentOrganization?.subscriptionStatus === "active"
-                }
+                isPremiumUser={isOrgPremium(currentOrganization)}
                 onBack={() => setActiveTab("overview")}
               />
             )}
@@ -2843,7 +2847,7 @@ export default function AdminDashboard({
                   organization={currentOrganization}
                   showBuilderButton={false}
                   accessToken={accessToken}
-                  isPremiumUser={true}
+                  isPremiumUser={isOrgPremium(currentOrganization)}
                 />
               )}
             </div>
