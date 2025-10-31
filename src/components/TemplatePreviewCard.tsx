@@ -64,7 +64,7 @@ export default function TemplatePreviewCard({
         <div className="relative aspect-[4/3] rounded-lg overflow-hidden border-2 border-gray-200 bg-gray-50 transition-transform group-hover:scale-[1.02]">
           <div className="absolute inset-0 flex items-center justify-center">
             <div
-              className="transform scale-[0.4] origin-top-left"
+              className="transform scale-[0.4] origin-center"
               style={{ width: "200%", height: "200%" }}
             >
               <CertificateRenderer
