@@ -6,6 +6,20 @@ import { logger } from "npm:hono/logger";
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import * as kv from "./kv_store.tsx";
 
+// Load local .env during development so Deno.env.get(...) picks up values
+// This is a no-op in environments that don't have a .env file.
+try {
+  // Top-level dynamic import; load.ts will populate Deno.env from .env when present
+  await import("https://deno.land/std@0.203.0/dotenv/load.ts");
+  console.log("✅ Loaded .env into Deno.env (if present)");
+} catch (err) {
+  // Non-fatal: production environments may not allow network imports or .env isn't present
+  console.log(
+    "ℹ️ .env loader not applied (ok in production):",
+    err?.message || err
+  );
+}
+
 const app = new Hono();
 
 // Middleware - Configure CORS to allow all requests
