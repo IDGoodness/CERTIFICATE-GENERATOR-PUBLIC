@@ -94,10 +94,10 @@ export default function CertificateRenderer({
     case "8":
       return <CertificateTemplate8 {...templateProps} />;
 
-    // case "9":
-    //   return <CertificateTemplate9 {...templateProps} />;
-
     case "9":
+      return <CertificateTemplate9 {...templateProps} />;
+      
+    case "10":
       return <CertificateTemplate10 {...templateProps} />;
     
     // All other template IDs fall back to Template 1
