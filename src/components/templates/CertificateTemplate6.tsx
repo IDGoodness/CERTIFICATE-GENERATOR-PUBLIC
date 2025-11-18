@@ -54,7 +54,7 @@ export default function CertificateTemplate6({
   const displayProgramName = programName || courseTitle;
   const displayIssueDate = issueDate || date;
   const displayRecipientName = recipientName;
-  
+
   // Format date
   const formattedDate = new Date(displayIssueDate).toLocaleDateString("en-US", {
     year: "numeric",
@@ -62,8 +62,17 @@ export default function CertificateTemplate6({
     day: "numeric",
   });
 
+  const scale = mode === "student" ? 0.3 : 1;
+
+  const containerClass = isPreview
+    ? "w-full mx-auto origin-center overflow-visible flex justify-center"
+    : "min-w-[1056px] flex justify-center items-center";
+
   return (
-    <div className="relative w-full h-full bg-white flex items-center justify-center p-8">
+    <div
+      className={containerClass}
+      style={{ transform: `scale(${scale})`, backgroundColor: "transparent" }}
+    >
       {/* Certificate Container */}
       <div className="relative w-full max-w-[1000px] aspect-[1.414/1] bg-white">
         {/* Dark Brown Corner Decorations */}
@@ -160,7 +169,7 @@ export default function CertificateTemplate6({
             <p className="text-sm text-gray-600 uppercase tracking-wide mb-4">
               This certificate is proudly presented to
             </p>
-            
+
             {/* Recipient Name */}
             <div className="mb-6">
               <h3
@@ -182,7 +191,8 @@ export default function CertificateTemplate6({
 
             {/* Description */}
             <p className="text-xs text-gray-600 leading-relaxed max-w-2xl mx-auto">
-              {description || `In recognition of outstanding achievement and exceptional dedication to ${displayProgramName}. This certificate acknowledges your commitment to excellence and significant contributions that have made a lasting impact on our organization and community.`}
+              {description ||
+                `In recognition of outstanding achievement and exceptional dedication to ${displayProgramName}. This certificate acknowledges your commitment to excellence and significant contributions that have made a lasting impact on our organization and community.`}
             </p>
           </div>
 
@@ -198,19 +208,28 @@ export default function CertificateTemplate6({
 
             {/* Signature */}
             <div className="text-center">
-              <div className="text-xs text-gray-500 uppercase mb-1">Signature</div>
-              {(signatureUrl1 || (signatories.length > 0 && signatories[0].signatureUrl)) ? (
+              <div className="text-xs text-gray-500 uppercase mb-1">
+                Signature
+              </div>
+              {signatureUrl1 ||
+              (signatories.length > 0 && signatories[0].signatureUrl) ? (
                 <img
                   src={signatureUrl1 || signatories[0].signatureUrl}
                   alt="Signature"
                   className="h-12 mx-auto mb-1 object-contain"
-                  style={{ maxWidth: '180px' }}
+                  style={{ maxWidth: "180px" }}
                 />
               ) : (
                 <div className="h-12 w-40 border-b border-gray-400 mb-1" />
               )}
-              <div className="text-xs text-gray-600">{signatoryName1 || (signatories.length > 0 ? signatories[0].name : 'John Smith')}</div>
-              <div className="text-xs text-gray-500">{signatoryTitle1 || (signatories.length > 0 ? signatories[0].title : 'Director')}</div>
+              <div className="text-xs text-gray-600">
+                {signatoryName1 ||
+                  (signatories.length > 0 ? signatories[0].name : "John Smith")}
+              </div>
+              <div className="text-xs text-gray-500">
+                {signatoryTitle1 ||
+                  (signatories.length > 0 ? signatories[0].title : "Director")}
+              </div>
             </div>
 
             {/* Verification Seals */}

@@ -34,7 +34,7 @@ export default function CertificateTemplate5({
   const scale = mode === "student" ? 0.3 : 1;
 
   const containerClass = isPreview
-    ? "w-full mx-auto origin-center overflow-visible"
+    ? "w-full mx-auto origin-center overflow-visible flex justify-center"
     : "min-w-[1056px] flex justify-center items-center";
 
     useEffect(() => {
@@ -51,7 +51,7 @@ export default function CertificateTemplate5({
   return (
     <div
       className={containerClass}
-      style={{ transform: `scale(${scale})`, backgroundColor: "transparent" }}
+      style={{ transform: `scale(${scale})`, backgroundColor: "transparent"}}
     >
       <div className="flex justify-center bg-gradient-to-l from-[#161BA0] to-[#AC06F2] items-center shadow-md w-3xl p-10 rounded-sm relative text-[#4D4D4D] font-['Montserrat'] overflow-hidden">
         <div>

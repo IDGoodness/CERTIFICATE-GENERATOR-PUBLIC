@@ -38,7 +38,7 @@ export default function CertificateTemplate9({
   signatoryName2,
   signatoryTitle2,
   signatureUrl2,
-  mode = 'student'
+  mode = 'student',
 }: CertificateTemplate9Props) {
   // scale for preview vs student mode
   const transformClass = mode === 'student' ? 'transform scale-[0.3]' : 'transform scale-100';
@@ -69,7 +69,7 @@ export default function CertificateTemplate9({
   return (
     <div className={`${containerClass} ${transformClass} bg-transparent`}>
       <div className="flex shadow-md rounded-sm relative overflow-hidden bg-white"
-      style={{width: "700px"}}>
+      style={{width: "600px"}}>
         <div className="flex flex-col gap-10 items-start w-3/4 p-10">
           <div className="space-y-2"
           style={{ fontFamily: "'Libre Baskerville', serif" }}>

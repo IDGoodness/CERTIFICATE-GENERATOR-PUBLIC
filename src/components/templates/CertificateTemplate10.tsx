@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
 import Best from "../../assets/best.svg";
-import DecorImg from "../../assets/Decor2.svg";
-import Medal2Img from "../../assets/Medal2.svg";
 import Path2646 from "../../assets/path2646.svg";
 import VectorImg from "../../assets/Vector.svg";
 

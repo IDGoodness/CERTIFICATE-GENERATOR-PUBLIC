@@ -207,7 +207,7 @@ export default function CertificateTemplate8({
             <div className="space-y-4">
               <div
                 className="border-b-2 w-50 text-center font-bold text-lg"
-                style={{ color: "#161BA069" }}
+                style={{ color: "#FA54CE80" }}
               >
                 Hormat kami
               </div>

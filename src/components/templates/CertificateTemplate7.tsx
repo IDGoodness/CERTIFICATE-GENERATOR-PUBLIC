@@ -41,13 +41,13 @@ export default function CertificateTemplate7({
   mode = "student",
 }: CertificateTemplate7Props) {
   // scale for preview vs student mode
-  const transformClass =
-    mode === "student" ? "transform scale-[0.3]" : "transform scale-100";
+  const scale = mode === "student" ? 0.3 : 1;
+
   const containerClass = isPreview
     ? "w-full mx-auto origin-center overflow-visible flex justify-center"
     : "min-w-[1056px] flex justify-center items-center";
 
-  // inject fonts: Libre Baskerville (available on Google Fonts) and attempt Momo_Signature (fallbacks will apply if unavailable)
+  
   useEffect(() => {
     const link1 = document.createElement("link");
     link1.rel = "stylesheet";
@@ -57,7 +57,7 @@ export default function CertificateTemplate7({
 
     const link2 = document.createElement("link");
     link2.rel = "stylesheet";
-    // Momo_Signature may be a custom font; we attempt to load it via Google Fonts name (harmless if not found).
+    
     link2.href =
       "https://fonts.googleapis.com/css2?family=Momo+Signature&display=swap";
     document.head.appendChild(link2);
@@ -76,10 +76,11 @@ export default function CertificateTemplate7({
   });
 
   return (
-    <div className={`${containerClass} ${transformClass} bg-transparent`}>
+    <div className={containerClass}
+    style={{ transform: `scale(${scale})`, backgroundColor: "transparent" }}>
       <div
         className="flex shadow-md rounded-sm relative overflow-hidden bg-white"
-        style={{ width: "700px" }}
+        style={{ width: "600px" }}
       >
         <div className="flex flex-col gap-10 items-start w-3/4 p-10">
           <div

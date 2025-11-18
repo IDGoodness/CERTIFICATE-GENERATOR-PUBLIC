@@ -35,7 +35,6 @@ export default function CertificateTemplate4({
 }: CertificateTemplate4Props) {
   const previewMode = isPreview || mode === "template-selection";
 
-  // Ensure the Rakkas font is loaded for this template
   useEffect(() => {
     const id = "rakkas-font";
     if (!document.getElementById(id)) {
@@ -51,20 +50,19 @@ export default function CertificateTemplate4({
     ? {
         width: "100%",
         maxWidth: 1056,
-        padding: "16px",
+        padding: "24px",
         boxSizing: "border-box",
       }
-    : { width: 1056, padding: "24px" };
+    : { width: 1056, padding: "24px"};
 
   return (
     <div style={{ backgroundColor: "transparent" }} className="w-full mx-auto">
       <div
-        className="flex justify-center bg-white items-center shadow-md w-3xl p-6 rounded-sm relative overflow-hidden"
+        className="flex justify-center bg-white items-center shadow-md rounded-sm relative overflow-hidden"
         style={mainBoxStyle}
       >
         <div>
           {ribbon1 && (
-            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={String(ribbon1)}
               alt="ribbon1"
@@ -72,7 +70,6 @@ export default function CertificateTemplate4({
             />
           )}
           {ribbon2 && (
-            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={String(ribbon2)}
               alt="ribbon2"
