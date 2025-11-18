@@ -1,4 +1,5 @@
 import CertificateTemplate1 from "./templates/CertificateTemplate1";
+import CertificateTemplate10 from "./templates/CertificateTemplate10";
 import CertificateTemplate2 from "./templates/CertificateTemplate2";
 import CertificateTemplate3 from "./templates/CertificateTemplate3";
 import CertificateTemplate4 from "./templates/CertificateTemplate4";
