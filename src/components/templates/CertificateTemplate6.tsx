@@ -62,8 +62,17 @@ export default function CertificateTemplate6({
     day: "numeric",
   });
 
+  const scale = mode === "student" ? 0.3 : 1;
+
+  const containerClass = isPreview
+    ? "w-full mx-auto origin-center overflow-visible flex justify-center"
+    : "min-w-[1056px] flex justify-center items-center";
+
   return (
-    <div className="relative w-full h-full bg-white flex items-center justify-center p-8">
+    <div
+      className={containerClass}
+      style={{ transform: `scale(${scale})`, backgroundColor: "transparent" }}
+    >
       {/* Certificate Container */}
       <div className="relative w-full max-w-[1000px] aspect-[1.414/1] bg-white">
         {/* Dark Brown Corner Decorations */}

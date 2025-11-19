@@ -373,6 +373,22 @@ const DEFAULT_TEMPLATES = [
     isDefault: true,
     createdAt: new Date().toISOString(),
   },
+  {
+    id: "template10",
+    name: "Academic Endurance",
+    description: "Perfect for educational institutions",
+    config: {
+      layout: "academic",
+      colors: {
+        primary: "#dc2626",
+        secondary: "#991b1b",
+        accent: "#ea580c",
+      },
+    },
+    type: "default",
+    isDefault: true,
+    createdAt: new Date().toISOString(),
+  },
 ];
 
 // ==================== AUTH ROUTES ====================

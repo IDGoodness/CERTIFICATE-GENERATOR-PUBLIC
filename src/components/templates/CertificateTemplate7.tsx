@@ -41,13 +41,12 @@ export default function CertificateTemplate7({
   mode = "student",
 }: CertificateTemplate7Props) {
   // scale for preview vs student mode
-  const transformClass =
-    mode === "student" ? "transform scale-[0.3]" : "transform scale-100";
+  const scale = mode === "student" ? 0.3 : 1;
+
   const containerClass = isPreview
     ? "w-full mx-auto origin-center overflow-visible flex justify-center"
     : "min-w-[1056px] flex justify-center items-center";
 
-  // inject fonts: Libre Baskerville (available on Google Fonts) and attempt Momo_Signature (fallbacks will apply if unavailable)
   useEffect(() => {
     const link1 = document.createElement("link");
     link1.rel = "stylesheet";
@@ -57,7 +56,7 @@ export default function CertificateTemplate7({
 
     const link2 = document.createElement("link");
     link2.rel = "stylesheet";
-    // Momo_Signature may be a custom font; we attempt to load it via Google Fonts name (harmless if not found).
+
     link2.href =
       "https://fonts.googleapis.com/css2?family=Momo+Signature&display=swap";
     document.head.appendChild(link2);
@@ -76,10 +75,13 @@ export default function CertificateTemplate7({
   });
 
   return (
-    <div className={`${containerClass} ${transformClass} bg-transparent`}>
+    <div
+      className={containerClass}
+      style={{ transform: `scale(${scale})`, backgroundColor: "transparent" }}
+    >
       <div
         className="flex shadow-md rounded-sm relative overflow-hidden bg-white"
-        style={{ width: "700px" }}
+        style={{ width: "600px" }}
       >
         <div className="flex flex-col gap-10 items-start w-3/4 p-10">
           <div
@@ -107,14 +109,21 @@ export default function CertificateTemplate7({
             >
               {recipientName}
             </p>
-            <p className="text-[#5A5549] text-sm max-w-sm">{description || "lorem ipsum dolor sit amet, consectetur adipiscing elit." }</p>
+            <p className="text-[#5A5549] text-sm max-w-sm">
+              {description ||
+                "lorem ipsum dolor sit amet, consectetur adipiscing elit."}
+            </p>
           </div>
 
           {signatoryName1 && (
             <div className="flex items-end justify-between w-3/4">
               <div className="flex flex-col gap-2 text-sm">
-                <img src={signatureUrl1} alt={signatoryName1} className='w-24 h-16 object-contain' />
-                <p className="font-bold border-b border-[#6F6A5B] -mt-10">
+                <img
+                  src={signatureUrl1}
+                  alt={signatoryName1}
+                  className="w-24 h-16 object-contain"
+                />
+                <p className="font-bold border-b border-[#6F6A5B]">
                   {signatoryName1}
                 </p>
                 <p className="text-sm">{signatoryTitle1}</p>
@@ -122,8 +131,9 @@ export default function CertificateTemplate7({
               {/* Date Display */}
               {date && (
                 <div className="flex flex-col items-end gap-2 text-sm">
+                  <img src={VectorImg} alt="" className="w-1/3" />
                   <p className="uppercase">Presented on</p>
-                  <p>{date}</p>
+                  <p>{date || "DATE"}</p>
                 </div>
               )}
             </div>
