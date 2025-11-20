@@ -77,7 +77,13 @@ export default function CertificateTemplate2({
   }> = [
     { src: signatureUrl1, name: signatoryName1, title: signatoryTitle1 },
     { src: signatureUrl2, name: signatoryName2, title: signatoryTitle2 },
-  ];
+    ];
+  
+  const formattedDate = new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   return (
     <div
@@ -161,6 +167,8 @@ export default function CertificateTemplate2({
             {recipientName}
           </p>
 
+          <p className="font-medium text-2xl" style={{fontFamily: 'cursive'}} > {courseTitle || "Course Title"} </p>
+
           <p className="text-center max-w-2xl px-8">
             {description ||
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat."}
@@ -234,7 +242,7 @@ export default function CertificateTemplate2({
                     className="text-sm font-medium"
                     style={{ color: "#4D4D4D" }}
                   >
-                    {date}
+                    {formattedDate || "DATE"}
                   </div>
                   <div className="text-xs font-bold ">Date</div>
                 </div>

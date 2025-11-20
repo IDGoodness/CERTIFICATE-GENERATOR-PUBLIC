@@ -49,6 +49,12 @@ export default function CertificateTemplate3({
         boxSizing: "border-box",
       }
     : { width: 1056, height: 816, padding: "64px 64px" };
+  
+  const formattedDate = new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   return (
     <div style={{ backgroundColor: "transparent" }} className="w-full mx-auto">
@@ -197,6 +203,8 @@ export default function CertificateTemplate3({
             {recipientName}
           </p>
 
+          <p className="font-medium text-2xl" style={{fontFamily: 'cursive'}} > {courseTitle || "Course Title"} </p>
+
           <p className="text-center max-w-2xl">
             {description ||
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."}
@@ -270,7 +278,7 @@ export default function CertificateTemplate3({
                     className="text-sm font-medium"
                     style={{ color: "#4D4D4D" }}
                   >
-                    {date}
+                    {formattedDate || "DATE"}
                   </div>
                   <div className="text-xs font-bold ">Date</div>
                 </div>

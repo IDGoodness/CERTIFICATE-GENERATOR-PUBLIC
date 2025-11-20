@@ -88,8 +88,10 @@ export default function CertificateTemplate7({
             className="space-y-2"
             style={{ fontFamily: "'Libre Baskerville', serif" }}
           >
-            <h2 className="font-bold text-4xl">CERTIFICATE</h2>
-            <p>OF ACHIEVEMENT</p>
+            <h2 className="font-bold text-4xl uppercase">
+              {header || "Certificate"}{" "}
+            </h2>
+            {/* <p>OF ACHIEVEMENT</p> */}
             <div className="flex gap-4">
               {/* Decorative repeated small paths */}
               <img src={Path2646} alt="" />
@@ -109,6 +111,13 @@ export default function CertificateTemplate7({
             >
               {recipientName}
             </p>
+            <p
+              className="font-medium text-2xl"
+              style={{ fontFamily: "cursive" }}
+            >
+              {courseTitle || "Course Title"}
+            </p>
+
             <p className="text-[#5A5549] text-sm max-w-sm">
               {description ||
                 "lorem ipsum dolor sit amet, consectetur adipiscing elit."}
@@ -125,6 +134,7 @@ export default function CertificateTemplate7({
                   src={signatureUrl1}
                   alt={signatoryName1}
                   className="w-24 h-16 object-contain"
+                  style={{ marginBottom: -12 }}
                 />
                 <p className="font-bold border-b border-[#6F6A5B]">
                   {signatoryName1}
@@ -136,7 +146,7 @@ export default function CertificateTemplate7({
                 <div className="flex flex-col items-end gap-2 text-sm">
                   <img src={VectorImg} alt="" className="w-1/3" />
                   <p className="uppercase">Presented on</p>
-                  <p>{date || "DATE"}</p>
+                  <p>{formattedDate || "DATE"}</p>
                 </div>
               )}
             </div>
