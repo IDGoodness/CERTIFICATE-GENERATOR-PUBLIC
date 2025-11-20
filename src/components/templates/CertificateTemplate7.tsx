@@ -81,9 +81,7 @@ export default function CertificateTemplate7({
     >
       <div
         className="flex shadow-md rounded-sm relative overflow-hidden bg-white"
-        style={{ width: "600px",
-          height: "500px"
-         }}
+        style={{ width: "600px", height: "500px" }}
       >
         <div className="flex flex-col gap-10 items-start w-3/4 p-10">
           <div
@@ -118,7 +116,10 @@ export default function CertificateTemplate7({
           </div>
 
           {signatoryName1 && (
-            <div className="flex items-end justify-between w-3/4">
+            <div
+              className="flex items-end absolute"
+              style={{ gap: "80px", bottom: "60px" }}
+            >
               <div className="flex flex-col gap-2 text-sm">
                 <img
                   src={signatureUrl1}
@@ -153,7 +154,7 @@ export default function CertificateTemplate7({
             src={Medal2Img}
             alt=""
             className="absolute"
-            style={{ right: "100px", top: "80px", width: "25%" }}
+            style={{ right: "150px", top: "80px", width: "25%" }}
           />
         </div>
       </div>

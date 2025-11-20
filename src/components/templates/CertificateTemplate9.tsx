@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 
-import DecorImg from '../../assets/Decor2.svg';
-import Medal2Img from '../../assets/Medal2.svg';
-import Path2646 from '../../assets/path2646.svg';
-import VectorImg from '../../assets/Vector.svg';
+import DecorImg from "../../assets/Decor2.svg";
+import Medal2Img from "../../assets/Medal2.svg";
+import Path2646 from "../../assets/path2646.svg";
+import VectorImg from "../../assets/Vector.svg";
 
 interface CertificateTemplate9Props {
   header: string;
@@ -26,35 +26,40 @@ interface CertificateTemplate9Props {
 export default function CertificateTemplate9({
   header,
   courseTitle,
-  description = 'This certificate acknowledges your outstanding contribution and dedication to the Design project, showcasing your commitment to excellence, innovation, and teamwork.',
+  description = "This certificate acknowledges your outstanding contribution and dedication to the Design project, showcasing your commitment to excellence, innovation, and teamwork.",
   date,
-  recipientName = 'Name Surname',
+  recipientName = "Name Surname",
   isPreview = false,
-  organizationName = 'Your Organization',
+  organizationName = "Your Organization",
   organizationLogo,
-  signatoryName1 = 'Signature',
-  signatoryTitle1 = 'MANAGER, CTO',
+  signatoryName1 = "Signature",
+  signatoryTitle1 = "MANAGER, CTO",
   signatureUrl1,
   signatoryName2,
   signatoryTitle2,
   signatureUrl2,
-  mode = 'student',
+  mode = "student",
 }: CertificateTemplate9Props) {
   // scale for preview vs student mode
-  const transformClass = mode === 'student' ? 'transform scale-[0.3]' : 'transform scale-100';
-  const containerClass = isPreview ? 'w-full mx-auto origin-center overflow-visible flex justify-center' : 'min-w-[1056px] flex justify-center items-center';
+  const transformClass =
+    mode === "student" ? "transform scale-[0.3]" : "transform scale-100";
+  const containerClass = isPreview
+    ? "w-full mx-auto origin-center overflow-visible flex justify-center"
+    : "min-w-[1056px] flex justify-center items-center";
 
   // inject fonts: Libre Baskerville (available on Google Fonts) and attempt Momo_Signature (fallbacks will apply if unavailable)
   useEffect(() => {
-    const link1 = document.createElement('link');
-    link1.rel = 'stylesheet';
-    link1.href = 'https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap';
+    const link1 = document.createElement("link");
+    link1.rel = "stylesheet";
+    link1.href =
+      "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap";
     document.head.appendChild(link1);
 
-    const link2 = document.createElement('link');
-    link2.rel = 'stylesheet';
+    const link2 = document.createElement("link");
+    link2.rel = "stylesheet";
     // Momo_Signature may be a custom font; we attempt to load it via Google Fonts name (harmless if not found).
-    link2.href = 'https://fonts.googleapis.com/css2?family=Momo+Signature&display=swap';
+    link2.href =
+      "https://fonts.googleapis.com/css2?family=Momo+Signature&display=swap";
     document.head.appendChild(link2);
 
     return () => {
@@ -64,15 +69,23 @@ export default function CertificateTemplate9({
   }, []);
 
   // formatted date
-  const formattedDate = new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  const formattedDate = new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   return (
     <div className={`${containerClass} ${transformClass} bg-transparent`}>
-      <div className="flex shadow-md rounded-sm relative overflow-hidden bg-white"
-      style={{width: "600px"}}>
+      <div
+        className="flex shadow-md rounded-sm relative overflow-hidden bg-white"
+        style={{ width: "600px", height: "500px" }}
+      >
         <div className="flex flex-col gap-10 items-start w-3/4 p-10">
-          <div className="space-y-2"
-          style={{ fontFamily: "'Libre Baskerville', serif" }}>
+          <div
+            className="space-y-2"
+            style={{ fontFamily: "'Libre Baskerville', serif" }}
+          >
             <p>CERTIFICATE OF</p>
             <h2 className="font-bold text-4xl">ACHIEVEMENT</h2>
             <div className="flex gap-4">
@@ -85,17 +98,26 @@ export default function CertificateTemplate9({
           </div>
 
           <div className="space-y-4">
-            <p className="text-gray-400 uppercase font-medium">This is proudly presented to</p>
-            <p className="font-bold text-amber-900 text-3xl border-b border-[#6F6A5B] w-3/4"
-            style={{fontFamily: "'Momo Signature', cursive"}}>
+            <p className="text-gray-400 uppercase font-medium">
+              This is proudly presented to
+            </p>
+            <p
+              className="font-bold text-amber-900 text-3xl border-b border-[#6F6A5B] w-3/4"
+              style={{ fontFamily: "'Momo Signature', cursive" }}
+            >
               {recipientName}
             </p>
             <p className="text-[#5A5549] text-sm max-w-sm">{description}</p>
           </div>
 
-          <div className="flex items-end justify-between w-3/4">
+          <div className="flex items-end absolute"
+          style={{gap: "80px",
+            bottom: "80px"
+          }}>
             <div className="flex flex-col gap-2 text-sm">
-              <p className="font-bold border-b border-[#6F6A5B]">{signatoryName1}</p>
+              <p className="font-bold border-b border-[#6F6A5B]">
+                {signatoryName1}
+              </p>
               <p className="text-sm">{signatoryTitle1}</p>
             </div>
 
@@ -109,13 +131,17 @@ export default function CertificateTemplate9({
 
         {/* Right side decorations */}
         <div className="">
-          <img src={DecorImg} alt="" className="absolute right-0 top-0 h-full object-cover" />
-          <img src={Medal2Img} alt="" className="absolute"
-          style={{right:"80px", 
-            top:"80px",
-            width: "25%"
-          }}
-           />
+          <img
+            src={DecorImg}
+            alt=""
+            className="absolute right-0 top-0 h-full object-cover"
+          />
+          <img
+            src={Medal2Img}
+            alt=""
+            className="absolute"
+            style={{ right: "130px", top: "80px", width: "25%" }}
+          />
         </div>
       </div>
     </div>
