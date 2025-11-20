@@ -192,7 +192,7 @@ export default function CertificateTemplate12({
                     className="text-sm font-medium"
                     style={{ color: "#4D4D4D" }}
                   >
-                    {date}
+                    {formattedDate}
                   </div>
                   <div className="text-xs font-bold ">Date</div>
                 </div>

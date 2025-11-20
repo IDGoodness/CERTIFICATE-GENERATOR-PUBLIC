@@ -77,7 +77,13 @@ export default function CertificateTemplate2({
   }> = [
     { src: signatureUrl1, name: signatoryName1, title: signatoryTitle1 },
     { src: signatureUrl2, name: signatoryName2, title: signatoryTitle2 },
-  ];
+    ];
+  
+  const formattedDate = new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   return (
     <div
@@ -234,7 +240,7 @@ export default function CertificateTemplate2({
                     className="text-sm font-medium"
                     style={{ color: "#4D4D4D" }}
                   >
-                    {date}
+                    {formattedDate || "DATE"}
                   </div>
                   <div className="text-xs font-bold ">Date</div>
                 </div>

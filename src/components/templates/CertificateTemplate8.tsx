@@ -53,6 +53,12 @@ export default function CertificateTemplate8({
     }
   }, []);
 
+  const formattedDate = new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   return (
     <div
       className={containerClass}
@@ -286,7 +292,7 @@ export default function CertificateTemplate8({
                       backgroundClip: "text",
                     }}
                   >
-                    {date}
+                    {formattedDate}
                   </div>
                   <div
                     className="text-xs font-bold "

@@ -49,6 +49,12 @@ export default function CertificateTemplate3({
         boxSizing: "border-box",
       }
     : { width: 1056, height: 816, padding: "64px 64px" };
+  
+  const formattedDate = new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   return (
     <div style={{ backgroundColor: "transparent" }} className="w-full mx-auto">
@@ -270,7 +276,7 @@ export default function CertificateTemplate3({
                     className="text-sm font-medium"
                     style={{ color: "#4D4D4D" }}
                   >
-                    {date}
+                    {formattedDate || "DATE"}
                   </div>
                   <div className="text-xs font-bold ">Date</div>
                 </div>

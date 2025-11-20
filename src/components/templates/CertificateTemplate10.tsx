@@ -138,7 +138,7 @@ export default function CertificateTemplate10({
                   <div className="flex flex-col items-end gap-2 text-sm">
                     <img src={VectorImg} alt="" className="w-1/3" />
                     <p className="uppercase">Presented on</p>
-                    <p>{date || "DATE"}</p>
+                    <p>{formattedDate || "DATE"}</p>
                   </div>
                 )}
               </div>
