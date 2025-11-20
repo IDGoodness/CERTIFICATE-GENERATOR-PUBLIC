@@ -79,7 +79,7 @@ export default function CertificateTemplate1({
         style={{ width: "640px", height: "500px" }}
       >
         {/* Main Certificate Container - Landscape A4 proportions */}
-        <div className="space-y-4 py-10 rounded-lg mt-10 w-3xl">
+        <div className="space-y-4 py-10 rounded-lg mt-10 w-3xl border">
           <div className="flex flex-row space-x-4 justify-between items-center p-4">
             <img src={vector2} alt="" className="w-40" style={{ width: 40 }} />
             <div className="flex flex-col items-end text-[#5D5D5D] ">
