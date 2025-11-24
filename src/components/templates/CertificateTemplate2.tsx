@@ -67,7 +67,7 @@ export default function CertificateTemplate2({
   }, []);
 
   const containerClass = isPreview
-    ? "w-full mx-auto origin-center overflow-visible"
+    ? "w-full mx-auto origin-center overflow-visible flex justify-center"
     : "min-w-[1056px] flex justify-center items-center";
 
   // Normalize signatory data into a single array so we can render uniformly
