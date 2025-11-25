@@ -6,7 +6,7 @@ import shape4 from "../../assets/shapes (4).svg";
 import shape5 from "../../assets/shapes (5).svg";
 import shape6 from "../../assets/shapes (6).svg";
 import shape7 from "../../assets/shapes (7).svg";
-import shape8 from "../../assets/shapes (8).svg";
+import shape8 from "../../assets/Shapes (8).svg";
 import shape9 from "../../assets/shapes (9).svg";
 
 interface CertificateTemplate15Props {
