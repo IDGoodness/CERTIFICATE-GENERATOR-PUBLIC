@@ -90,7 +90,6 @@ export default function CertificateTemplate15({
           paddingTop: "56px",
           paddingBottom: "56px",
           fontFamily: "'Open sans', sans-serif",
-          border: "10px solid red",
         }}
       >
         <div className="z-0">
@@ -126,7 +125,7 @@ export default function CertificateTemplate15({
                 className="w-16 h-16 object-contain"
               />
             )}
-            <p className="text-white font-bold tracking-wider">
+            <p className="text-[#0C3C58] font-bold tracking-wider">
               {organizationName}
             </p>
           </div>

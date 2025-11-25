@@ -66,14 +66,14 @@ export default function CertificateTemplate8({
       style={{ transform: `scale(${scale})`, backgroundColor: "transparent" }}
     >
       <div
-        className="flex justify-center items-center shadow-md w-3xl p-10 rounded-sm relative text-[#4D4D4D] font-['Montserrat'] overflow-hidden"
+        className="flex justify-center items-center shadow-md p-10 rounded-sm relative text-[#4D4D4D] font-['Montserrat'] overflow-hidden"
         style={{
-          background: "linear-gradient(to right, #DDB4FB, #FDBA18)", width: "1056px", height: "600px",
+          background: "linear-gradient(to right, #DDB4FB, #FDBA18)", width: "1000px"
         }}
       >
         <div>
           <div
-            className="w-32 h-32 border-2 absolute bottom-0 rotate-45 z-40"
+            className="w-32 h-32 border-2 absolute bottom-0 rotate-45 z-10"
             style={{
               border: "2px solid",
               left: "-20px",
@@ -156,13 +156,11 @@ export default function CertificateTemplate8({
               background: "linear-gradient(to left, #FF9C39, #FA54CE)",
             }}
           />
-          {first && (
-            <img
-              src={String(first)}
-              className="absolute -top-5 -right-5"
-              alt="decoration"
-            />
-          )}
+          <img
+            src={first}
+            className="absolute -top-5 -right-5"
+            alt="decoration"
+          />
           <div className="mt-6">
             <p className="font-medium" style={{ color: "#FA54CE80" }}>
               {organizationName || "Company Name"}
@@ -197,7 +195,7 @@ export default function CertificateTemplate8({
             {description || "Successfully participated in the course"}
           </p>
 
-          <div className="mt-20 flex justify-between items-end">
+          <div className="mt-20 flex justify-between items-end z-50">
             <div className="flex gap-8 justify-center items-center mt-5">
               {/* Signature 1 - Always show if name is provided */}
               {signatoryName1 && (
@@ -210,7 +208,7 @@ export default function CertificateTemplate8({
                       src={signatureUrl1}
                       alt={signatoryName1}
                       className="w-24 h-16 object-contain"
-                      style={{ marginBottom: -12 }}
+                      style={{ marginBottom: -8 }}
                     />
                   )}
                   {!signatureUrl1 && (
@@ -250,7 +248,7 @@ export default function CertificateTemplate8({
                       src={signatureUrl2}
                       alt={signatoryName2}
                       className="w-24 h-16 object-contain"
-                      style={{ marginBottom: -12 }}
+                      style={{ marginBottom: -8 }}
                     />
                   )}
                   {!signatureUrl2 && (
