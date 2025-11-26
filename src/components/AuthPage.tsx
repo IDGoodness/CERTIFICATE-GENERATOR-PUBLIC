@@ -117,12 +117,12 @@ export default function AuthPage({
     setIsLoading(true);
 
     // Show a helpful toast for first-time users
-    toast.info(
-      "Connecting to server... (first request may take 30-60 seconds)",
-      {
-        duration: 5000,
-      }
-    );
+    // toast.info(
+    //   "Connecting to server... (first request may take 30-60 seconds)",
+    //   {
+    //     duration: 5000,
+    //   }
+    // );
 
     try {
       const response = await authApi.signIn({
@@ -875,7 +875,8 @@ export default function AuthPage({
                     </Button>
 
                     <p className="text-xs text-gray-500 text-center mt-4">
-                      By signing up, you agree to use this platform responsibly, and Genomac Innovation Hub reserves their rights.
+                      By signing up, you agree to use this platform responsibly,
+                      and Genomac Innovation Hub reserves their rights.
                     </p>
                   </form>
                 )}

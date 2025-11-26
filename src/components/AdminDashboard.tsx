@@ -127,7 +127,7 @@ import {
   Cell,
 } from "recharts";
 import { copyToClipboard } from "../utils/clipboard";
-import { certificateApi } from "../utils/api";
+import { certificateApi, testimonialApi } from "../utils/api";
 import { projectId } from "../utils/supabase/info";
 import {
   generateSecureCertificateUrl,
@@ -236,6 +236,58 @@ export default function AdminDashboard({
     useState<boolean>(false);
   const isMobile = useIsMobile();
 
+  // Apply organization theming to CSS variables so the whole app picks up the org color
+  useEffect(() => {
+    const applyTheme = (hexColor?: string) => {
+      const root = document.documentElement;
+      const defaultHex = "#ea580c"; // orange default
+      const color = hexColor || defaultHex;
+
+      // Normalize hex and compute rgb components
+      const toRgb = (h: string) => {
+        const hex = h.replace("#", "");
+        const bigint = parseInt(
+          hex.length === 3
+            ? hex
+                .split("")
+                .map((c) => c + c)
+                .join("")
+            : hex,
+          16
+        );
+        const r = (bigint >> 16) & 255;
+        const g = (bigint >> 8) & 255;
+        const b = bigint & 255;
+        return `${r}, ${g}, ${b}`;
+      };
+
+      try {
+        const rgb = toRgb(color);
+        root.style.setProperty("--primary", color);
+        root.style.setProperty("--primary-rgb", rgb);
+        root.style.setProperty("--ring", color);
+        root.style.setProperty("--chart-1", color);
+        root.style.setProperty("--sidebar-primary", color);
+        root.style.setProperty("--sidebar-ring", color);
+      } catch (e) {
+        // Fallback to default if parsing fails
+        root.style.setProperty("--primary", defaultHex);
+        root.style.setProperty("--primary-rgb", "234, 88, 12");
+        root.style.setProperty("--ring", defaultHex);
+        root.style.setProperty("--chart-1", defaultHex);
+        root.style.setProperty("--sidebar-primary", defaultHex);
+        root.style.setProperty("--sidebar-ring", defaultHex);
+      }
+    };
+
+    applyTheme(
+      currentOrganization?.primaryColor || user.subsidiary?.primaryColor
+    );
+
+    // Reset to default when unmounting
+    return () => applyTheme(undefined);
+  }, [currentOrganization, user.subsidiary]);
+
   // Subscription state
   const [subscription, setSubscription] = useState<any>(null);
   const [loadingSubscription, setLoadingSubscription] = useState(true);
@@ -269,6 +321,7 @@ export default function AdminDashboard({
     any[]
   >([]); // Current session only
   const [allCertificates, setAllCertificates] = useState<any[]>([]); // Full history from backend
+  const [allTestimonials, setAllTestimonials] = useState<TestimonialData[]>([]);
   const [genIsGenerating, setGenIsGenerating] = useState(false);
 
   // Signatory states for Generation tab
@@ -285,6 +338,46 @@ export default function AdminDashboard({
   const [isRefreshingCertificates, setIsRefreshingCertificates] =
     useState(false);
   const [hasLoadedCertificates, setHasLoadedCertificates] = useState(false);
+  const [hasLoadedTestimonials, setHasLoadedTestimonials] = useState(false);
+
+  // Auto-load testimonials for overview stats (separate from TestimonialsView)
+  useEffect(() => {
+    const loadTestimonials = async () => {
+      if (!accessToken || !currentOrganization || hasLoadedTestimonials) {
+        return;
+      }
+
+      try {
+        console.log(
+          "📜 Loading testimonials from backend for org:",
+          currentOrganization.id
+        );
+
+        const response = await testimonialApi.getForOrganization(
+          accessToken,
+          currentOrganization.id
+        );
+
+        console.log(
+          "✅ Loaded testimonials from backend:",
+          response.testimonials?.length || 0
+        );
+
+        if (response.testimonials) {
+          setAllTestimonials(response.testimonials);
+          setHasLoadedTestimonials(true);
+        } else {
+          setAllTestimonials([]);
+          setHasLoadedTestimonials(true);
+        }
+      } catch (error: any) {
+        console.error("Failed to load testimonials:", error);
+        setHasLoadedTestimonials(true); // mark as loaded to avoid retries
+      }
+    };
+
+    loadTestimonials();
+  }, [accessToken, currentOrganization, hasLoadedTestimonials]);
 
   // Auto-load certificates when component mounts or when switching to certificates tab
   useEffect(() => {
@@ -370,6 +463,7 @@ export default function AdminDashboard({
   // Reset hasLoadedCertificates when organization changes to force reload
   useEffect(() => {
     setHasLoadedCertificates(false);
+    setHasLoadedTestimonials(false);
   }, [currentOrganization?.id]);
 
   // Sync currentOrganization with organizations prop when it changes
@@ -717,30 +811,34 @@ export default function AdminDashboard({
       };
     }
 
-    return {
-      totalCertificates: targetOrg.programs.reduce(
-        (sum: number, p: Program) => sum + p.certificates,
-        0
-      ),
-      totalTestimonials: targetOrg.programs.reduce(
-        (sum: number, p: Program) => sum + p.testimonials,
-        0
-      ),
-      totalPrograms: targetOrg.programs.length,
-      averageEngagement: Math.floor(
-        (targetOrg.programs.reduce(
+    // Prefer using the real certificate records if they've been loaded
+    // (more accurate than relying on aggregated program counts).
+    const totalCertificates = hasLoadedCertificates
+      ? allCertificates.filter((cert) => cert.organizationId === targetOrg.id)
+          .length
+      : targetOrg.programs.reduce(
+          (sum: number, p: Program) => sum + p.certificates,
+          0
+        );
+
+    const totalTestimonials = hasLoadedTestimonials
+      ? allTestimonials.filter((t) => t.organizationId === targetOrg.id).length
+      : targetOrg.programs.reduce(
           (sum: number, p: Program) => sum + p.testimonials,
           0
-        ) /
-          Math.max(
-            targetOrg.programs.reduce(
-              (sum: number, p: Program) => sum + p.certificates,
-              0
-            ),
-            1
-          )) *
-          100
-      ),
+        );
+
+    const totalPrograms = targetOrg.programs.length;
+
+    const averageEngagement = Math.floor(
+      (totalTestimonials / Math.max(totalCertificates, 1)) * 100
+    );
+
+    return {
+      totalCertificates,
+      totalTestimonials,
+      totalPrograms,
+      averageEngagement,
     };
   };
 
@@ -1446,11 +1544,11 @@ export default function AdminDashboard({
                 name: "Analytics",
                 icon: BarChart3,
               },
-              {
-                id: "billing",
-                name: "Billing",
-                icon: CreditCard,
-              },
+              // {
+              //   id: "billing",
+              //   name: "Billing",
+              //   icon: CreditCard,
+              // },
               {
                 id: "settings",
                 name: "Settings",
@@ -1584,11 +1682,11 @@ export default function AdminDashboard({
                     name: "Analytics",
                     icon: BarChart3,
                   },
-                  {
-                    id: "billing",
-                    name: "Billing",
-                    icon: CreditCard,
-                  },
+                  // {
+                  //   id: "billing",
+                  //   name: "Billing",
+                  //   icon: CreditCard,
+                  // },
                   {
                     id: "settings",
                     name: "Settings",
@@ -1659,7 +1757,7 @@ export default function AdminDashboard({
                   {activeTab === "certificates" && "Certificate Management"}
                   {activeTab === "testimonials" && "Student Testimonials"}
                   {activeTab === "analytics" && "Analytics & Reports"}
-                  {activeTab === "billing" && "Billing & Subscription"}
+                  {/* {activeTab === "billing" && "Billing & Subscription"} */}
                   {activeTab === "settings" && "Platform Settings"}
                 </h2>
                 <p className="text-xs md:text-sm text-gray-500 mt-1 truncate">
@@ -1848,8 +1946,12 @@ export default function AdminDashboard({
                           <TooltipTrigger asChild>
                             <Button
                               onClick={navigateToGenerate}
-                              className="w-full h-12 flex items-center justify-center gap-2 bg-[rgba(196,117,76,0.915)] bg-[rgb(246,98,20)]"
+                              className="w-full h-12 flex items-center justify-center gap-2"
                               size="sm"
+                              style={{
+                                background:
+                                  "linear-gradient(135deg, rgba(var(--primary-rgb),0.9), rgba(var(--primary-rgb),1))",
+                              }}
                             >
                               <Award className="w-4 h-4" />
                               Generate Certificates
@@ -1977,13 +2079,12 @@ export default function AdminDashboard({
                         </Tooltip>
 
                         {/* Create Custom Template */}
-                        <Tooltip>
+                        {/* <Tooltip>
                           <TooltipTrigger asChild>
                             <button
                               disabled
                               className="flex flex-col items-center gap-3 p-6 border-2 border-dashed rounded-lg relative overflow-hidden opacity-60 cursor-not-allowed"
                             >
-                              {/* Coming Soon overlay */}
                               <div className="absolute inset-0 bg-gradient-to-br from-gray-900/80 to-gray-800/80 backdrop-blur-sm flex items-center justify-center z-10">
                                 <div className="text-center">
                                   <Sparkles className="w-8 h-8 text-orange-400 mx-auto mb-2" />
@@ -1995,8 +2096,6 @@ export default function AdminDashboard({
                                   </p>
                                 </div>
                               </div>
-
-                              {/* Premium badge */}
                               <div className="absolute top-2 right-2">
                                 <Badge className="bg-gradient-to-r from-amber-500 to-orange-600 text-white text-xs px-2 py-0.5">
                                   Premium
@@ -2039,7 +2138,7 @@ export default function AdminDashboard({
                               visual editor
                             </p>
                           </TooltipContent>
-                        </Tooltip>
+                        </Tooltip> */}
 
                         {/* View Analytics */}
                         <Tooltip>
