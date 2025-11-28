@@ -3081,7 +3081,7 @@ export default function AdminDashboard({
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-2">
                 <img src={logo} alt="logo" className="w-10" />
-                <p className="text-white font-medium hidden md:block md:text-xl">
+                <p className="text-orange-500 font-medium hidden md:block md:text-xl">
                   Certifyer
                 </p>
               </div>
