@@ -107,7 +107,7 @@ const Footer: React.FC = () => {
         </div>
         <div className="flex flex-col items-start space-y-4">
           <div className="flex items-center gap-2">
-            <img src={logo} alt="logo" className="w-20" />
+            <img src={logo} alt="logo" className="w-10" />
             <p className="text-orange-500 font-medium hidden md:block md:text-xl">
               Certifyer
             </p>
