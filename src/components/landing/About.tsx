@@ -13,10 +13,10 @@ const About: React.FC = () => {
       id: 1,
       text: "Instant generation and delivery of certificates.",
     },
-    {
-      id: 2,
-      text: "Monetization through institutional use or certificate-based branding.",
-    },
+    // {
+    //   id: 2,
+    //   text: "Monetization through institutional use or certificate-based branding.",
+    // },
     {
       id: 3,
       text: "Analytics for performance and impact tracking.",
@@ -34,7 +34,7 @@ const About: React.FC = () => {
           <div className="space-y-4">
             <h2 className="font-extrabold text-3xl md:text-4xl">About</h2>
             <p className="leading-7 text-sm md:text-base text-gray-700">
-              The Certificate Generator Platform helps training institutes,
+              Certifyer helps training institutes,
               universities, and organizations issue beautiful, secure, and
               trackable certificates. Each certificate includes unique IDs,
               shareable URLs, and testimonial collection features, allowing you

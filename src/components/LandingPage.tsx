@@ -34,9 +34,9 @@ export default function LandingPage() {
         <section id="work">
           <Work />
         </section>
-        <section id="prices">
+        {/* <section id="prices">
           <Price />
-        </section>
+        </section> */}
         <section id="testimonials">
           <Testimonial />
         </section>

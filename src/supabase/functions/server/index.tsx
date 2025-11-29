@@ -342,7 +342,7 @@ const DEFAULT_TEMPLATES = [
     isDefault: true,
     createdAt: new Date().toISOString(),
   },
-  
+
   {
     id: "template8",
     name: "Academic Participation",
@@ -378,7 +378,8 @@ const DEFAULT_TEMPLATES = [
   {
     id: "template10",
     name: "Certificate of Achievement",
-    description: "Modern design with corner decorations, orange accents, and elegant Playfair Display typography",
+    description:
+      "Modern design with corner decorations, orange accents, and elegant Playfair Display typography",
     config: {
       layout: "modern",
       colors: {
@@ -394,7 +395,8 @@ const DEFAULT_TEMPLATES = [
   {
     id: "template11",
     name: "Certificate of Excellence",
-    description: "Distinguished design with decorative left border, gradient orange accent, and Cormorant Garamond font",
+    description:
+      "Distinguished design with decorative left border, gradient orange accent, and Cormorant Garamond font",
     config: {
       layout: "distinguished",
       colors: {
@@ -410,7 +412,8 @@ const DEFAULT_TEMPLATES = [
   {
     id: "template12",
     name: "Certificate of Completion",
-    description: "Professional design with double border frame, diagonal backgrounds, and Libre Baskerville typography",
+    description:
+      "Professional design with double border frame, diagonal backgrounds, and Libre Baskerville typography",
     config: {
       layout: "professional",
       colors: {
@@ -426,7 +429,8 @@ const DEFAULT_TEMPLATES = [
   {
     id: "template13",
     name: "Certificate of Achievement",
-    description: "Modern gradient design with purple and indigo tones, decorative corners, and Playfair Display font",
+    description:
+      "Modern gradient design with purple and indigo tones, decorative corners, and Playfair Display font",
     config: {
       layout: "modern-gradient",
       colors: {
@@ -442,7 +446,8 @@ const DEFAULT_TEMPLATES = [
   {
     id: "template14",
     name: "Certificate of Excellence",
-    description: "Elegant emerald design with double border frames, decorative flourishes, and Cinzel serif typography",
+    description:
+      "Elegant emerald design with double border frames, decorative flourishes, and Cinzel serif typography",
     config: {
       layout: "elegant-emerald",
       colors: {
@@ -458,7 +463,8 @@ const DEFAULT_TEMPLATES = [
   {
     id: "template15",
     name: "Certificate of Recognition",
-    description: "Bold geometric design with orange header, diagonal accents, and Raleway modern typography",
+    description:
+      "Bold geometric design with orange header, diagonal accents, and Raleway modern typography",
     config: {
       layout: "geometric-modern",
       colors: {
@@ -474,7 +480,8 @@ const DEFAULT_TEMPLATES = [
   {
     id: "template16",
     name: "Certificate of Distinction",
-    description: "Professional blue design with gradient background, decorative badge, and Merriweather typography",
+    description:
+      "Professional blue design with gradient background, decorative badge, and Merriweather typography",
     config: {
       layout: "professional-blue",
       colors: {
@@ -3299,29 +3306,63 @@ app.get("/make-server-a611b057/admin/stats", async (c) => {
       return c.json({ error: "Unauthorized - Admin access required" }, 403);
     }
 
+    // Helper to normalize kv.getByPrefix results (some helpers return {key,value}, others return values directly)
+    const normalizePrefix = (arr: any[]) => {
+      if (!Array.isArray(arr)) return [];
+      if (arr.length === 0) return [];
+      if (arr[0] && Object.prototype.hasOwnProperty.call(arr[0], "value")) {
+        return arr
+          .map((it: any) => it.value)
+          .filter((v: any) => v && typeof v === "object");
+      }
+      return arr.filter((v: any) => v && typeof v === "object");
+    };
+
     // Get all organizations - filter out null/undefined values
     const allOrgs = await kv.getByPrefix("org:");
-    const organizations = allOrgs
-      .map((item) => item.value)
-      .filter((org) => org && typeof org === "object");
+    const organizations = normalizePrefix(allOrgs);
 
     // Get all certificates - filter out null/undefined values
     const allCerts = await kv.getByPrefix("cert:");
-    const certificates = allCerts
-      .map((item) => item.value)
-      .filter((cert) => cert && typeof cert === "object");
+    const certificates = normalizePrefix(allCerts);
 
     // Get all templates - filter out null/undefined values
     const allTemplates = await kv.getByPrefix("globaltemplate:");
-    const templates = allTemplates
-      .map((item) => item.value)
-      .filter((template) => template && typeof template === "object");
+    const templates = normalizePrefix(allTemplates);
 
     // Get all payments - filter out null/undefined values
     const allPayments = await kv.getByPrefix("payment:");
-    const payments = allPayments
-      .map((item) => item.value)
-      .filter((payment) => payment && typeof payment === "object");
+    const payments = normalizePrefix(allPayments);
+
+    // Get all testimonials - filter out null/undefined values
+    const allTestimonials = await kv.getByPrefix("testimonial:");
+    const testimonials = normalizePrefix(allTestimonials);
+
+    // Debug: log counts and a sample item for each collection
+    try {
+      console.log("admin/stats - organizations.count:", organizations.length);
+      console.log("admin/stats - certificates.count:", certificates.length);
+      console.log("admin/stats - templates.count:", templates.length);
+      console.log("admin/stats - payments.count:", payments.length);
+      console.log("admin/stats - testimonials.count:", testimonials.length);
+      if (organizations.length > 0)
+        console.log(
+          "admin/stats - sample org:",
+          JSON.stringify(organizations[0]).slice(0, 1000)
+        );
+      if (certificates.length > 0)
+        console.log(
+          "admin/stats - sample cert:",
+          JSON.stringify(certificates[0]).slice(0, 1000)
+        );
+      if (testimonials.length > 0)
+        console.log(
+          "admin/stats - sample testimonial:",
+          JSON.stringify(testimonials[0]).slice(0, 1000)
+        );
+    } catch (e) {
+      console.log("admin/stats - debug logging failed", e?.message || e);
+    }
 
     // Calculate stats with safe access
     const premiumOrgs = organizations.filter(
@@ -3339,6 +3380,7 @@ app.get("/make-server-a611b057/admin/stats", async (c) => {
       totalCertificates: certificates.length,
       totalRevenue: totalRevenue,
       totalTemplates: templates.length,
+      totalTestimonials: testimonials.length,
       premiumUsers: premiumOrgs,
       freeUsers: freeOrgs,
     };
