@@ -1,6 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
+import { Link } from "react-scroll";
 
 const Footer: React.FC = () => {
   return (
@@ -62,12 +63,15 @@ const Footer: React.FC = () => {
             >
               How it works
             </a>
-            <a
-              href="/features"
+            <Link
+              to="features"
+              smooth={true}
+              duration={500}
+              offset={-50}
               className="block text-white/70 hover:text-white transition-colors"
             >
               Features
-            </a>
+            </Link>
             <a
               href="/pricing"
               className="block text-white/70 hover:text-white transition-colors"
