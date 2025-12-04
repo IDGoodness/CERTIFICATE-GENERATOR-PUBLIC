@@ -1,7 +1,8 @@
 import React from "react";
-// import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import { Link } from "react-scroll";
+import { Link as RouterLink } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
+
 
 const Footer: React.FC = () => {
   return (
@@ -40,30 +41,24 @@ const Footer: React.FC = () => {
             >
               Cookies
             </a> */}
-            <Link
+            <RouterLink
               to="/terms"
               className="block text-white/70 hover:text-white transition-colors"
             >
               Terms of Service
-            </Link>
-            <Link
+            </RouterLink>
+            <RouterLink
               to="/privacy"
               className="block text-white/70 hover:text-white transition-colors"
             >
               Privacy Policy
-            </Link>
+            </RouterLink>
           </div>
         </div>
         <div>
           <h4 className="font-semibold text-white">Products</h4>
           <div className="space-y-3 mt-4 text-sm">
-            <a
-              href="/howitworks"
-              className="block text-white/70 hover:text-white transition-colors"
-            >
-              How it works
-            </a>
-            <Link
+            <ScrollLink
               to="features"
               smooth={true}
               duration={500}
@@ -71,7 +66,16 @@ const Footer: React.FC = () => {
               className="block text-white/70 hover:text-white transition-colors"
             >
               Features
-            </Link>
+            </ScrollLink>
+            <ScrollLink
+              to="work"
+              smooth={true}
+              duration={500}
+              offset={-50}
+              className="block text-white/70 hover:text-white transition-colors"
+            >
+              How It Works
+            </ScrollLink>
             <a
               href="/pricing"
               className="block text-white/70 hover:text-white transition-colors"
@@ -142,18 +146,18 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="flex gap-4 text-sm">
-          <Link
-            to="/terms"
-            className="block text-white/70 hover:text-white transition-colors"
-          >
-            Terms of Service
-          </Link>
-          <Link
-            to="/privacy"
-            className="block text-white/70 hover:text-white transition-colors"
-          >
-            Privacy Policy
-          </Link>
+           <RouterLink
+              to="/terms"
+              className="block text-white/70 hover:text-white transition-colors"
+            >
+              Terms of Service
+            </RouterLink>
+            <RouterLink
+              to="/privacy"
+              className="block text-white/70 hover:text-white transition-colors"
+            >
+              Privacy Policy
+            </RouterLink>
           {/* <a
             href="/security"
             className="block text-white/70 hover:text-white transition-colors"
