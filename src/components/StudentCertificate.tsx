@@ -95,6 +95,7 @@ const StudentCertificate: React.FC<StudentCertificateProps> = ({
   const [showFullDetails, setShowFullDetails] = useState(false);
   const [enteredName, setEnteredName] = useState("");
   const [enteredTestimonial, setEnteredTestimonial] = useState("");
+  const [enteredEmail, setEnteredEmail] = useState("");
   const [showNameForm, setShowNameForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [templateConfig, setTemplateConfig] = useState<any>(null); // Template config from backend
@@ -927,6 +928,8 @@ const StudentCertificate: React.FC<StudentCertificateProps> = ({
       "this organization";
     const courseName =
       certificate.courseName || certificate.program?.name || "this course";
+    const orgLogo =
+      certificate.subsidiary?.logo || certificate.organization?.logo;
 
     const handleFormSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
@@ -944,6 +947,7 @@ const StudentCertificate: React.FC<StudentCertificateProps> = ({
           const response = await certificateApi.submitTestimonial({
             certificateId: certificate.id,
             studentName: enteredName.trim(),
+            email: enteredEmail.trim() || undefined,
             testimonial: enteredTestimonial.trim(),
             courseName: courseName,
             organizationId: certificate.organizationId || "",
@@ -979,9 +983,17 @@ const StudentCertificate: React.FC<StudentCertificateProps> = ({
         <Card className="w-full max-w-md">
           <CardContent className="p-8">
             <div className="text-center mb-6">
-              <Award className="w-16 h-16 text-primary mx-auto mb-4" />
+              {orgLogo ? (
+                <img
+                  src={orgLogo}
+                  alt={`${orgName} logo`}
+                  className="w-16 h-16 object-contain mx-auto mb-4"
+                />
+              ) : (
+                <Award className="w-16 h-16 text-primary mx-auto mb-4" />
+              )}
               <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                Complete Your Certificate
+                Get Your Certificate
               </h2>
               <p className="text-gray-600">
                 For <span className="font-semibold">{courseName}</span> from{" "}
@@ -1011,6 +1023,27 @@ const StudentCertificate: React.FC<StudentCertificateProps> = ({
                   autoFocus
                   disabled={isSubmitting}
                 />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="studentEmail"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
+                  Email Address (Optional)
+                </label>
+                <input
+                  id="studentEmail"
+                  type="email"
+                  value={enteredEmail}
+                  onChange={(e) => setEnteredEmail(e.target.value)}
+                  placeholder="your.email@example.com"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                  disabled={isSubmitting}
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Your email will only be visible to course administrators
+                </p>
               </div>
 
               <div>

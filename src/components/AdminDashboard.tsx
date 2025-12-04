@@ -1480,7 +1480,10 @@ export default function AdminDashboard({
                     {user.username}
                   </p>
                   <div className="flex items-center gap-1">
-                    <img src={currentOrganization?.logo} className="w-8 mt-1 " />
+                    <img
+                      src={currentOrganization?.logo}
+                      className="w-8 mt-1 "
+                    />
                     <p className="text-xs text-gray-500 truncate">
                       {currentOrganization?.name || user.company}
                     </p>
@@ -1606,7 +1609,11 @@ export default function AdminDashboard({
                       navCollapsed ? "" : "mr-2"
                     } flex-shrink-0`}
                   />
-                  {!navCollapsed && <span className="text-white hover:text-black">Sign Out</span>}
+                  {!navCollapsed && (
+                    <span className="text-white hover:text-black">
+                      Sign Out
+                    </span>
+                  )}
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="right">

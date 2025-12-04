@@ -53,6 +53,7 @@ import {
 import { toast } from "sonner";
 import { publicAnonKey, projectId } from "../utils/supabase/info";
 import BillingSettings from "./BillingSettings";
+import AdminEmailsView from "./AdminEmailsView";
 
 interface PlatformAdminPanelProps {
   adminEmail: string;
@@ -120,7 +121,7 @@ export default function PlatformAdminPanel({
   const [refreshing, setRefreshing] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [activeView, setActiveView] = useState<
-    "overview" | "organizations" | "analytics" | "billing"
+    "overview" | "organizations" | "analytics" | "billing" | "emails"
   >("overview");
   const [stats, setStats] = useState<PlatformStats>({
     totalOrganizations: 0,
@@ -165,6 +166,11 @@ export default function PlatformAdminPanel({
 
       const data = await response.json();
 
+      console.log("🔍 ADMIN DEBUG - Raw platform data:", data);
+      console.log(
+        "🔍 ADMIN DEBUG - Organizations count:",
+        data.organizations?.length
+      );
 
       // Process organizations - ensure all fields have defaults and unique IDs
       const orgs: Organization[] = (data.organizations || [])
@@ -544,6 +550,7 @@ export default function PlatformAdminPanel({
       count: filteredOrganizations.length,
     },
     { id: "billing", label: "Billing Settings", icon: CreditCard },
+    { id: "emails", label: "Email Addresses", icon: Mail },
     { id: "analytics", label: "Analytics", icon: BarChart3 },
   ];
 
@@ -666,6 +673,7 @@ export default function PlatformAdminPanel({
                 {activeView === "overview" && "Dashboard Overview"}
                 {activeView === "organizations" && "Organizations"}
                 {activeView === "billing" && "Billing Settings"}
+                {activeView === "emails" && "Email Addresses"}
                 {activeView === "analytics" && "Analytics"}
               </h1>
               <p className="text-gray-500 text-sm">
@@ -675,6 +683,8 @@ export default function PlatformAdminPanel({
                   "Manage all organizations on the platform"}
                 {activeView === "billing" &&
                   "Configure payment system and pricing"}
+                {activeView === "emails" &&
+                  "Collected student email addresses from testimonials"}
                 {activeView === "analytics" &&
                   "Platform analytics and insights"}
               </p>
@@ -1138,6 +1148,10 @@ export default function PlatformAdminPanel({
             <BillingSettings accessToken={accessToken} />
           )}
 
+          {activeView === "emails" && (
+            <AdminEmailsView accessToken={accessToken} />
+          )}
+
           {activeView === "analytics" && (
             <div className="space-y-5">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -1272,7 +1286,7 @@ export default function PlatformAdminPanel({
                 </CardContent>
               </Card>
               {/* Debug: show raw adminStats for troubleshooting (remove in production) */}
-              {/* {adminStats && (
+              {adminStats && (
                 <Card>
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm">
@@ -1288,7 +1302,7 @@ export default function PlatformAdminPanel({
                     </pre>
                   </CardContent>
                 </Card>
-              )} */}
+              )}
             </div>
           )}
         </div>
